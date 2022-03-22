@@ -46,4 +46,19 @@ public class Invoice {
     public int getNumber() {
         return number;
     }
+
+    public void printInvoice() {
+
+        System.out.println("Invoice number: " + getNumber() + "\n") ;
+
+        for (Product product : products.keySet()) {
+            BigDecimal quantity = new BigDecimal(products.get(product));
+            if (product.getName().equals(product.getName())) {
+               quantity = quantity.add(quantity);
+            }
+            System.out.println("Product name: " + product.getName());
+            System.out.println("Product quantity: " + quantity);
+            System.out.println("Product price: " + product.getPrice());
+        }
+    }
 }

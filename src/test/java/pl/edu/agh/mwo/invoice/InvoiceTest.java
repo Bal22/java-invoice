@@ -8,10 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import pl.edu.agh.mwo.invoice.Invoice;
-import pl.edu.agh.mwo.invoice.product.DairyProduct;
-import pl.edu.agh.mwo.invoice.product.OtherProduct;
-import pl.edu.agh.mwo.invoice.product.Product;
-import pl.edu.agh.mwo.invoice.product.TaxFreeProduct;
+import pl.edu.agh.mwo.invoice.product.*;
 
 public class InvoiceTest {
     private Invoice invoice;
@@ -150,4 +147,24 @@ public class InvoiceTest {
         int number2 = new Invoice().getNumber();
         Assert.assertThat(number1, Matchers.lessThan(number2));
     }
+
+    @Test
+    public void testInvoicePrint() {
+        invoice.printInvoice();
+    }
+
+    @Test
+    public void testWineExciseTax() {
+        Product wine = new BottleOfWine("Winiak",new BigDecimal(100));
+        invoice.addProduct(wine,10);
+        Assert.assertThat(new BigDecimal("1298.388"), Matchers.comparesEqualTo(invoice.getGrossTotal()));
+    }
+
+    @Test
+    public void testFuelCanisterExiceTax() {
+        Product canister = new FuelCanister("Canister",new BigDecimal(300));
+        invoice.addProduct(canister,5);
+        Assert.assertThat(new BigDecimal("1527.8"), Matchers.comparesEqualTo(invoice.getGrossTotal()));
+    }
+
 }
