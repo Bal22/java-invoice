@@ -1,6 +1,7 @@
 package pl.edu.agh.mwo.invoice;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -8,10 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import pl.edu.agh.mwo.invoice.Invoice;
-import pl.edu.agh.mwo.invoice.product.DairyProduct;
-import pl.edu.agh.mwo.invoice.product.OtherProduct;
-import pl.edu.agh.mwo.invoice.product.Product;
-import pl.edu.agh.mwo.invoice.product.TaxFreeProduct;
+import pl.edu.agh.mwo.invoice.product.*;
 
 public class InvoiceTest {
     private Invoice invoice;
@@ -150,4 +148,32 @@ public class InvoiceTest {
         int number2 = new Invoice().getNumber();
         Assert.assertThat(number1, Matchers.lessThan(number2));
     }
+
+    // *** ZADANIE DOMOWE ***
+
+    @Test
+    public void testPrintInvoice() {
+        Invoice example = new Invoice();
+        example.addProduct(new DairyProduct("Chiken wings", new BigDecimal(12)), 110);
+        example.addProduct(new DairyProduct("Chiken wings", new BigDecimal(12)), 200);
+        example.addProduct(new OtherProduct("Pork knuckles", new BigDecimal(40)), 50);
+        example.addProduct(new BottleOfWine("Winiacz",new BigDecimal(20)), 20);
+        invoice.printInvoice(example);
+    }
+
+
+    @Test
+    public void testWineExciseTax() {
+        Product wine = new BottleOfWine("Winiak",new BigDecimal(100));
+        invoice.addProduct(wine,10);
+        Assert.assertThat(new BigDecimal("1298.388"), Matchers.comparesEqualTo(invoice.getGrossTotal()));
+    }
+
+    @Test
+    public void testFuelCanisterExiceTax() {
+        Product canister = new FuelCanister("Canister",new BigDecimal(300));
+        invoice.addProduct(canister,5);
+        Assert.assertThat(new BigDecimal("1527.8"), Matchers.comparesEqualTo(invoice.getGrossTotal()));
+    }
+
 }
