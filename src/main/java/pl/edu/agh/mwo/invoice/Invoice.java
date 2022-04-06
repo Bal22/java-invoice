@@ -12,7 +12,14 @@ public class Invoice {
     private final int number = ++nextNumber;
 
     public void addProduct(Product product) {
-        addProduct(product, 1);
+        if (product == null) {
+            throw new IllegalArgumentException("Product can`t be null");
+        }
+        if (!products.containsKey(product)) {
+            addProduct(product, 1);
+        } else {
+            addProduct(product, products.get(product) + 1);
+        }
     }
 
     public void addProduct(Product product, Integer quantity) {
@@ -20,7 +27,6 @@ public class Invoice {
             throw new IllegalArgumentException();
         }
         products.put(product, quantity);
-
     }
 
     public BigDecimal getNetTotal() {
@@ -50,11 +56,14 @@ public class Invoice {
     }
 
     public void printInvoice(Invoice example) {
-        System.out.println("======= Invoice number: " + number + " =======" + "\n");
+        System.out.println("======= Invoice number: " + example.getNumber() + " =======" + "\n");
         for (Product product: example.products.keySet()) {
             BigDecimal quantity = new BigDecimal(example.products.get(product));
-            System.out.println("Product: " + product.getName() + " , " + "Quantity: " + quantity + " , "+ "Price: " + product.getPriceWithTax().multiply(quantity));
+            BigDecimal price = product.getPriceWithTax().multiply(quantity);
+            System.out.println("Product name: " + product.getName() + " , " + "Quantity: " + quantity + " , "+ "Price: " + price);
         }
-        System.out.println();
+        System.out.println("Number of products: " + example.products.size());
+        System.out.println("Total price: " + example.getGrossTotal() + "\n");
     }
+
 }

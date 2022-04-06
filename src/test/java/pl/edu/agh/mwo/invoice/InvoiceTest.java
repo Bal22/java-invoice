@@ -1,14 +1,12 @@
 package pl.edu.agh.mwo.invoice;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import pl.edu.agh.mwo.invoice.Invoice;
 import pl.edu.agh.mwo.invoice.product.*;
 
 public class InvoiceTest {
@@ -155,10 +153,14 @@ public class InvoiceTest {
     public void testPrintInvoice() {
         Invoice example = new Invoice();
         example.addProduct(new DairyProduct("Chiken wings", new BigDecimal(12)), 110);
-        example.addProduct(new DairyProduct("Chiken wings", new BigDecimal(12)), 200);
+        example.addProduct(new DairyProduct("Chiken wings", new BigDecimal(12)), 100);
         example.addProduct(new OtherProduct("Pork knuckles", new BigDecimal(40)), 50);
-        example.addProduct(new BottleOfWine("Winiacz",new BigDecimal(20)), 20);
+        example.addProduct(new BottleOfWine("Mocny Winiak",new BigDecimal(20)), 20);
         invoice.printInvoice(example);
+
+        Invoice example1 = new Invoice();
+        example1.addProduct(new DairyProduct("Chiken wings", new BigDecimal(12)), 110);
+        invoice.printInvoice(example1);
     }
 
 
@@ -175,5 +177,7 @@ public class InvoiceTest {
         invoice.addProduct(canister,5);
         Assert.assertThat(new BigDecimal("1527.8"), Matchers.comparesEqualTo(invoice.getGrossTotal()));
     }
+
+
 
 }
