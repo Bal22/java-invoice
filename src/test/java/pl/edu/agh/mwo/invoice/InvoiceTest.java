@@ -152,15 +152,19 @@ public class InvoiceTest {
     @Test
     public void testPrintInvoice() {
         Invoice example = new Invoice();
-        example.addProduct(new DairyProduct("Chiken wings", new BigDecimal(12)), 110);
-        example.addProduct(new DairyProduct("Chiken wings", new BigDecimal(12)), 100);
+        Product product1 = new DairyProduct("Chicken Wings", new BigDecimal(30));
+        example.addProduct(product1,20);
+        example.addProduct(product1,30);
+        example.addProduct(product1,25);
         example.addProduct(new OtherProduct("Pork knuckles", new BigDecimal(40)), 50);
         example.addProduct(new BottleOfWine("Mocny Winiak",new BigDecimal(20)), 20);
         invoice.printInvoice(example);
 
         Invoice example1 = new Invoice();
-        example1.addProduct(new DairyProduct("Chiken wings", new BigDecimal(12)), 110);
+        example1.addProduct(product1,300);
+        example1.addProduct(product1,100);
         invoice.printInvoice(example1);
+        Assert.assertThat(example1.getGrossTotal(), Matchers.comparesEqualTo(new BigDecimal(12960)));
     }
 
 
@@ -177,7 +181,4 @@ public class InvoiceTest {
         invoice.addProduct(canister,5);
         Assert.assertThat(new BigDecimal("1527.8"), Matchers.comparesEqualTo(invoice.getGrossTotal()));
     }
-
-
-
 }
