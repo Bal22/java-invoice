@@ -63,8 +63,8 @@ public class Invoice {
         for (Product product: example.products.keySet()) {
             BigDecimal quantity = new BigDecimal(example.products.get(product));
             BigDecimal price = product.getPriceWithTax().multiply(quantity);
-            System.out.println("Product name: " + product.getName() + " , " + 
-                               "Quantity: " + quantity + " , " + "Price: " + price);
+            System.out.println("Product name: " + product.getName() + " , " 
+            + "Quantity: " + quantity + " , " + "Price: " + price);
         }
         System.out.println("Number of products: " + example.products.size());
         System.out.println("Total price: " + example.getGrossTotal() + "\n");
