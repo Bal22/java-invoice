@@ -25,7 +25,7 @@ public class Invoice {
         if (product == null || quantity <= 0) {
             throw new IllegalArgumentException();
         }
-        if(products.containsKey(product)){
+        if (products.containsKey(product)) {
             products.put(product, products.get(product) + quantity);
         } else {
             products.put(product, quantity);
@@ -63,7 +63,8 @@ public class Invoice {
         for (Product product: example.products.keySet()) {
             BigDecimal quantity = new BigDecimal(example.products.get(product));
             BigDecimal price = product.getPriceWithTax().multiply(quantity);
-            System.out.println("Product name: " + product.getName() + " , " + "Quantity: " + quantity + " , "+ "Price: " + price);
+            System.out.println("Product name: " + product.getName() + " , " + 
+                               "Quantity: " + quantity + " , " + "Price: " + price);
         }
         System.out.println("Number of products: " + example.products.size());
         System.out.println("Total price: " + example.getGrossTotal() + "\n");
